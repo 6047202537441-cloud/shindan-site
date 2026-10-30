@@ -1,0 +1,93 @@
+/* 全体デザイン */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: #ffffff;
+  width: 90%;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* 画面切り替え用 */
+.screen {
+  display: none;
+}
+.screen.active {
+  display: block;
+}
+
+/* 画像スタイル */
+.mascot-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin: 16px 0;
+}
+
+/* ボタンデザイン */
+.btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.option-btn {
+  background-color: #eef2f5;
+  color: #333;
+  border: 2px solid #dcdfe6;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.option-btn:hover {
+  background-color: #e0e8f0;
+}
+
+.progress {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.result-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 12px;
+}
+
+.result-detail {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  margin: 16px 0;
+}
