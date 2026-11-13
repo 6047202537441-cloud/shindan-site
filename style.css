@@ -1,93 +1,169 @@
-/* 全体デザイン */
-body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  background-color: #f0f4f8;
-  color: #333;
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f1ea;
+  font-family: 'Yomogi', 'Hiragino Maru Gothic ProN', 'Yu Gothic', sans-serif;
+  color: #222;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  padding: 12px;
 }
 
 .container {
-  background: #ffffff;
-  width: 90%;
-  max-width: 480px;
-  padding: 24px;
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Canva画像と同じ16:9比率を維持するステージ */
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #f4f1ea;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* 画面切り替え用 */
-.screen {
-  display: none;
-}
-.screen.active {
+.bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* 画像スタイル */
-.mascot-img {
-  width: 180px;
-  height: 180px;
-  object-fit: contain;
-  margin: 16px 0;
+/* 画像のピンクボタンの上に重ねる透明クリック領域 */
+.buttons-layer {
+  position: absolute;
+  inset: 0;
 }
 
-/* ボタンデザイン */
-.btn {
-  background-color: #4a90e2;
-  color: white;
+.hotspot-btn {
+  position: absolute;
+  background: transparent;
   border: none;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 30px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-  width: 100%;
-  margin-top: 12px;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
-.btn:active {
-  transform: scale(0.98);
+/* ホバー・タップ時にほんのり反応させて押しやすくする */
+.hotspot-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  transform: scale(1.02);
 }
 
-.option-btn {
-  background-color: #eef2f5;
-  color: #333;
-  border: 2px solid #dcdfe6;
-  padding: 12px 20px;
-  margin: 8px 0;
-  border-radius: 12px;
-  font-size: 15px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
+.hotspot-btn:active {
+  transform: scale(0.97);
 }
 
-.option-btn:hover {
-  background-color: #e0e8f0;
+/* 結果画面のテキスト重ね合わせ */
+.result-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.progress {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 12px;
-}
-
-.result-title {
-  font-size: 22px;
+/* 動物の名前の下（「小見出しを追加」があった位置） */
+.result-subtitle {
+  position: absolute;
+  top: 34.5%;
+  left: 44%;
+  width: 50%;
+  font-size: clamp(12px, 2.1vw, 21px);
   font-weight: bold;
-  color: #2c3e50;
-  margin-top: 12px;
+  color: #222;
+  line-height: 1.3;
 }
 
-.result-detail {
+/* 下部の枠内（「あなたにおすすめする睡眠方法」の下） */
+.result-advice-list {
+  position: absolute;
+  top: 66.5%;
+  left: 11%;
+  width: 79%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.9vw, 10px);
+}
+
+.result-advice-list li {
+  font-size: clamp(11px, 1.95vw, 19px);
+  font-weight: bold;
+  color: #1a1a1a;
+  line-height: 1.35;
+  padding-left: 1.2em;
+  position: relative;
+}
+
+.result-advice-list li::before {
+  content: "・";
+  position: absolute;
+  left: 0;
+}
+
+/* もう一度診断するボタン（右上に控えめに配置） */
+.retry-btn {
+  position: absolute;
+  top: 3.5%;
+  right: 2.5%;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #d8cfc2;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: clamp(11px, 1.4vw, 14px);
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.retry-btn:hover {
+  background-color: #fff;
+  transform: translateY(-1px);
+}
+
+/* 下部の進行バー */
+.progress-area {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
   font-size: 14px;
-  line-height: 1.6;
   color: #555;
-  margin: 16px 0;
+}
+
+.back-btn {
+  background: #fff;
+  border: 1px solid #d8cfc2;
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  color: #444;
+}
+
+.back-btn:hover {
+  background: #f9f6f0;
+}
+
+.hidden {
+  display: none !important;
 }
